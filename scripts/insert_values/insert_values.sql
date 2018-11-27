@@ -1,0 +1,11 @@
+SOURCE values_ingredients.sql;
+SOURCE values_pizzas.sql;
+SOURCE values_sizes.sql;
+SOURCE values_clients.sql;
+SOURCE values_orders.sql;
+SOURCE values_drivers.sql;
+SOURCE values_vehicules.sql;
+SOURCE values_drive.sql;
+SOURCE values_contain.sql;
+SOURCE values_deliver.sql;
+SOURCE values_associate.sql;
