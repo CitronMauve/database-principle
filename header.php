@@ -14,7 +14,7 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="menu.php">Menu</a></li>
                 <?php
-                    if (isset($_SESSION['role']) && $_SESSION['role'] == 'Admin') {
+                    if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
                         echo '
                         <li><a href="clients.php">Clients</a></li>
                         ';
@@ -30,6 +30,9 @@
                         <li><a href="register.php">Register</a></li>
                         ';
                     } else {
+                        if ($_SESSION['role'] === 'Driver' || $_SESSION['role'] === 'Client') {
+                            echo '<li><a href="orders.php">Orders</a></li>';
+                        }
                         echo '
                         <li><a href="profile.php">Profile</a></li>
                         <li><a href="logout.php">Log out</a></li>
