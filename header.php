@@ -24,6 +24,11 @@
                         <li><a href="drivers.php">Drivers</a></li>
                         ';
                     }
+                    if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
+                        echo '
+                        <li><a href="admins.php">Admins</a></li>
+                        ';
+                    }
                     if (!isset($_SESSION['id'])) {
                         echo '
                         <li><a href="login.php">Login</a></li>

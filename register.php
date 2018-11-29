@@ -62,7 +62,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     <h1>Registration Form</h1>
     <form method="post">
         <p>
-            <label>Email address</label>
+            <label>Email</label>
             <input type="email" name="email" required/>
         </p>
         <p>

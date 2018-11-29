@@ -58,10 +58,7 @@ if (isset($_POST['pizza_id'])) {
         echo '
         <div class="element">
         <h3>'.$pizza_name.' : '.$pizza_price.'€</h3>
-
-        <img src="'.$pizza_img.'">
-
-        <ul>';
+        <img src="'.$pizza_img.'">';
         $ingredient_qry = $conn->query("SELECT Ingredients.name AS n
             FROM Pizzas
             INNER JOIN Contain ON Pizzas.id = Contain.id_pizza
@@ -69,9 +66,8 @@ if (isset($_POST['pizza_id'])) {
             WHERE Pizzas.name = '$pizza_name'
             ORDER BY n");
         while ($ingredient_data = $ingredient_qry->fetch()) {
-            echo '<li>'.$ingredient_data['n'].'</li>';
+            echo '<div style="font-size: 1.2em;">'.$ingredient_data['n'].'</div>';
         }
-        echo '</ul>';
         if (isset($_SESSION['role']) && $_SESSION['role'] === 'Client') {
             echo '
             <form method="post">
