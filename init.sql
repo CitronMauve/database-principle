@@ -189,17 +189,17 @@ CREATE TABLE `Members` (
 
 INSERT INTO `Members` (`id`, `email`, `password`, `lastname`, `firstname`, `address`, `phone`, `role`) VALUES
 (1, 'nhhvincent@gmail.com', '$2y$10$oG3CPSWC5mG8N2MC9O6TquEyLR6jTI1QI0aF5TEm4ySShxMMpMko6', 'NGUYEN', 'Huy-Hai Vincent', 'address', '+33012345678', 'Admin'),
-(2, 'bentalha@gmail.com', '$2y$10$maZ28pBmNe1OBvVvfR84pucwEjuEdnWesz0gB4cE8Lx3c6F0t1oWG', 'BENTALHA', 'Malik', 'address', '+33123456789', 'Driver'),
-(3, 'coundjidapadame@gmail.com', '$2y$10$maZ28pBmNe1OBvVvfR84pucwEjuEdnWesz0gB4cE8Lx3c6F0t1oWG', 'COUNDJIDAPADAME', 'Mourouguesh', 'address', '+33234567890', 'Driver'),
-(4, 'krifi@gmail.com', '$2y$10$maZ28pBmNe1OBvVvfR84pucwEjuEdnWesz0gB4cE8Lx3c6F0t1oWG', 'KRIFI', 'Sofiene', 'address', '+33345678901', 'Driver'),
-(5, 'elbaghdadi@gmail.com', '$2y$10$maZ28pBmNe1OBvVvfR84pucwEjuEdnWesz0gB4cE8Lx3c6F0t1oWG', 'EL BAGHDADI', 'Yassin', 'address', '+33456789012', 'Driver'),
+(2, 'bentalha@gmail.com', '$2y$10$uw9KAF/6gI5JG8NyiRUgdOuFHIwxSAu6genuM8GpOQmfIy3ysabVO', 'BENTALHA', 'Malik', 'address', '+33123456789', 'Driver'),
+(3, 'coundjidapadame@gmail.com', '$2y$10$uw9KAF/6gI5JG8NyiRUgdOuFHIwxSAu6genuM8GpOQmfIy3ysabVO', 'COUNDJIDAPADAME', 'Mourouguesh', 'address', '+33234567890', 'Driver'),
+(4, 'krifi@gmail.com', '$2y$10$uw9KAF/6gI5JG8NyiRUgdOuFHIwxSAu6genuM8GpOQmfIy3ysabVO', 'KRIFI', 'Sofiene', 'address', '+33345678901', 'Driver'),
+(5, 'elbaghdadi@gmail.com', '$2y$10$uw9KAF/6gI5JG8NyiRUgdOuFHIwxSAu6genuM8GpOQmfIy3ysabVO', 'EL BAGHDADI', 'Yassin', 'address', '+33456789012', 'Driver'),
 (6, 'thiam@gmail.com', '$2y$10$c1dVdQ9cDo2AkIJ907gL7OHefKB28zmhb4SeXexXVj.UBmHrngKb.', 'THIAM', 'Moussa', '5 Chicken Street', '+33987654321', 'Client'),
 (7, 'baptiste@gmail.com', '$2y$10$c1dVdQ9cDo2AkIJ907gL7OHefKB28zmhb4SeXexXVj.UBmHrngKb.', 'BAPTISTE', 'Jean', '48 Rue du Bourgeois', '+33876543210', 'Client'),
 (8, 'huyhai@gmail.com', '$2y$10$c1dVdQ9cDo2AkIJ907gL7OHefKB28zmhb4SeXexXVj.UBmHrngKb.', 'HUYHAI', 'Paul', '1 Boulevard du nem', '+33765432109', 'Client'),
 (9, 'coudji@gmail.com', '$2y$10$c1dVdQ9cDo2AkIJ907gL7OHefKB28zmhb4SeXexXVj.UBmHrngKb.', 'COUDJI', 'Indien', '5 Avenue du Curry', '+33654321098', 'Client'),
 (10, 'krif@gmail.com', '$2y$10$c1dVdQ9cDo2AkIJ907gL7OHefKB28zmhb4SeXexXVj.UBmHrngKb.', 'KRIF', 'Soso', '9 Rue jean macé GZ', '+33543210987', 'Client'),
 (11, 'admin@admin.com', '$2y$10$oG3CPSWC5mG8N2MC9O6TquEyLR6jTI1QI0aF5TEm4ySShxMMpMko6', 'admin', 'admin', 'admin', 'admin', 'Admin'),
-(12, 'driver@driver.com', '$2y$10$maZ28pBmNe1OBvVvfR84pucwEjuEdnWesz0gB4cE8Lx3c6F0t1oWG', 'driver', 'driver', 'driver', 'driver', 'Driver'),
+(12, 'driver@driver.com', '$2y$10$uw9KAF/6gI5JG8NyiRUgdOuFHIwxSAu6genuM8GpOQmfIy3ysabVO', 'driver', 'driver', 'driver', 'driver', 'Driver'),
 (13, 'client@client.com', '$2y$10$c1dVdQ9cDo2AkIJ907gL7OHefKB28zmhb4SeXexXVj.UBmHrngKb.', 'client', 'client', 'client', 'client', 'Client');
 
 -- --------------------------------------------------------

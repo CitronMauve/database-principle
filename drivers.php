@@ -9,7 +9,7 @@ require("config.php");
 $title_page = 'Drivers';
 require_once("header.php");
 
-function is_email_valid($email, $conn) {
+function isEmailValid($email, $conn) {
     $selectQuery = "SELECT 1 FROM Members WHERE email = '$email'";
     $response = $conn->query($selectQuery);
     if ($response->rowCount() > 0) {
@@ -20,7 +20,7 @@ function is_email_valid($email, $conn) {
     return true;
 }
 
-function create_driver($email, $password, $lastname, $firstname, $address, $phone, $role, $conn) {
+function createDriver($email, $password, $lastname, $firstname, $address, $phone, $role, $conn) {
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
     $qry = $conn->prepare("INSERT INTO Members (email, password, lastname, firstname, address, phone, role) VALUES(?, ?, ?, ?, ?, ?, ?)");
@@ -40,8 +40,8 @@ isset($_POST['phone'])) {
     $address = $_POST['address'];
     $phone = $_POST['phone'];
     $role = 'Driver';
-    if (is_email_valid($email, $conn)) {
-        create_driver($email, $password, $lastname, $firstname, $address, $phone, $role, $conn);
+    if (isEmailValid($email, $conn)) {
+        createDriver($email, $password, $lastname, $firstname, $address, $phone, $role, $conn);
     }
 }
 ?>
