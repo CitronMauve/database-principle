@@ -84,13 +84,11 @@ isset($_POST['phone'])) {
             <td>'.$firstname.'</td>
             <td>'.$address.'</td>
             <td>'.$phone.'</td>
-            <td>'.$deliver_data['COUNT(*)'].'</td>
-            ';
+            <td>'.$deliver_data['COUNT(*)'].'</td>';
             if (isset($_SESSION['role']) && $_SESSION['role'] == 'Admin') {
                 echo '
                 <td><a href="driver.php?action=edit&id='.$id.'">Edit</a></td>
-                <td><a href="driver.php?action=delete&id='.$id.'">Delete</a></td>
-                ';
+                <td><a href="driver.php?action=delete&id='.$id.'">Delete</a></td>';
             }
             echo '</tr>';
         }
@@ -101,7 +99,6 @@ isset($_POST['phone'])) {
     <?php
     if (isset($_SESSION['role']) && $_SESSION['role'] == 'Admin') {
         echo '
-
         <h1>Add a new driver</h1>
         <form method="post">
             <p>

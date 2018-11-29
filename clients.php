@@ -84,11 +84,13 @@ isset($_POST['phone'])) {
             <td>'.$firstname.'</td>
             <td>'.$address.'</td>
             <td>'.$phone.'</td>
-            <td>'.$orders_data['COUNT(*)'].'</td>
-            <td><a href="client.php?action=edit&id='.$id.'">Edit</a></td>
-            <td><a href="client.php?action=delete&id='.$id.'">Delete</a></td>
-            </tr>
-            ';
+            <td>'.$orders_data['COUNT(*)'].'</td>';
+            if (isset($_SESSION['role']) && $_SESSION['role'] == 'Admin') {
+                echo '
+                <td><a href="client.php?action=edit&id='.$id.'">Edit</a></td>
+                <td><a href="client.php?action=delete&id='.$id.'">Delete</a></td>';
+            }
+            echo '</tr>';
         }
         ?>
     </table>
