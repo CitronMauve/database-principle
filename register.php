@@ -10,7 +10,7 @@ function isEmailValid($email, $conn) {
         return false;
     }
 
-    $selectQuery = "SELECT 1 FROM member WHERE email = '$email'";
+    $selectQuery = "SELECT 1 FROM Members WHERE email = '$email'";
     $response = $conn->query($selectQuery);
     if ($response->rowCount() > 0) {
         echo 'Email already exists';
@@ -20,7 +20,7 @@ function isEmailValid($email, $conn) {
     return true;
 }
 
-function is_password_valid($password, $confirm) {
+function isPasswordValid($password, $confirm) {
     if (!isset($password)) {
         echo 'Password is required';
         return false;
@@ -32,12 +32,12 @@ function is_password_valid($password, $confirm) {
     return true;
 }
 
-function create_member($email, $password, $confirm, $conn) {
+function createMember($email, $password, $confirm, $conn) {
     // Hash password
     $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     // Insert new user
-    $query = $conn->prepare("INSERT INTO member (email, password) VALUES(?, ?)");
+    $query = $conn->prepare("INSERT INTO Members (email, password) VALUES(?, ?)");
     $result = $query->execute(array($_POST['email'], $hash));
 
     return $result;
@@ -48,8 +48,8 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     $password = $_POST['password'];
     $confirm = $_POST['confirm'];
 
-    if (isEmailValid($email, $conn) && is_password_valid($password, $confirm)) {
-        if (create_member($email, $password, $confirm, $conn)) {
+    if (isEmailValid($email, $conn) && isPasswordValid($password, $confirm)) {
+        if (createMember($email, $password, $confirm, $conn)) {
             echo 'New member registered successfully';
         } else {
             echo 'Error during member creation';

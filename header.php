@@ -24,16 +24,14 @@
                         <li><a href="drivers.php">Drivers</a></li>
                         ';
                     }
-                ?>
-                <li><a href="order.php">Order</a></li>
-                <?php
-                    if (!isset($_SESSION['email'])) {
+                    if (!isset($_SESSION['id'])) {
                         echo '
                         <li><a href="login.php">Login</a></li>
                         <li><a href="register.php">Register</a></li>
                         ';
                     } else {
                         echo '
+                        <li><a href="profile.php">Profile</a></li>
                         <li><a href="logout.php">Log out</a></li>
                         ';
                     }
