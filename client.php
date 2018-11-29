@@ -94,3 +94,5 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
         <input type="submit" value="Update" name="update">
     </form>
 </body>
+
+<?php require_once("footer.php") ?>
