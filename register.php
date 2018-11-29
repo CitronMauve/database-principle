@@ -4,7 +4,7 @@ require("config.php");
 $title_page = 'Register';
 require_once("header.php");
 
-function is_email_valid($email, $conn) {
+function isEmailValid($email, $conn) {
     if (!isset($email)) {
         echo 'Email is required';
         return false;
@@ -48,7 +48,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     $password = $_POST['password'];
     $confirm = $_POST['confirm'];
 
-    if (is_email_valid($email, $conn) && is_password_valid($password, $confirm)) {
+    if (isEmailValid($email, $conn) && is_password_valid($password, $confirm)) {
         if (create_member($email, $password, $confirm, $conn)) {
             echo 'New member registered successfully';
         } else {

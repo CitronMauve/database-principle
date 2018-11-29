@@ -8,10 +8,10 @@ require_once("header.php");
 if (isset($_POST['email']) && isset($_POST['password'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $qry = $conn->query("SELECT password, role FROM Members WHERE email = '$email'");
+    $qry = $conn->query("SELECT id, password, role FROM Members WHERE email = '$email'");
     $data = $qry->fetch();
     if (password_verify($password, $data['password'])) {
-        $_SESSION['email'] = $email;
+        $_SESSION['id'] = $data['id'];
         $_SESSION['role'] = $data['role'];
         header('Location: index.php');
     } else {
