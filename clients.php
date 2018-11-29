@@ -94,35 +94,38 @@ isset($_POST['phone'])) {
     </table>
     </div>
     <br>
-
-    <h1>Add new client</h1>
-    <form method="post">
-        <p>
-            <label>Email</label>
-            <input type="email" name="email" required/>
-        </p>
-        <p>
-            <label>Password</label>
-            <input type="password" name="password" required/>
-        </p>
-        <p>
-            <label>Lastname</label>
-            <input type="text" name="lastname" required/>
-        </p>
-        <p>
-            <label>Firstname</label>
-            <input type="text" name="firstname" required/>
-        </p>
-        <p>
-            <label>Address</label>
-            <input type="text" name="address" required/>
-        </p>
-        <p>
-            <label>Phone</label>
-            <input type="text" name="phone" required/>
-        </p>
-        <input type="submit" value="Add">
-    </form>
+    <?php
+    if (isset($_SESSION['role']) && $_SESSION['role'] == 'Admin') {
+        echo '
+        <h1>Add a new client</h1>
+        <form method="post">
+            <p>
+                <label>Email</label>
+                <input type="email" name="email" required/>
+            </p>
+            <p>
+                <label>Password</label>
+                <input type="password" name="password" required/>
+            </p>
+            <p>
+                <label>Lastname</label>
+                <input type="text" name="lastname" required/>
+            </p>
+            <p>
+                <label>Firstname</label>
+                <input type="text" name="firstname" required/>
+            </p>
+            <p>
+                <label>Address</label>
+                <input type="text" name="address" required/>
+            </p>
+            <p>
+                <label>Phone</label>
+                <input type="text" name="phone" required/>
+            </p>
+            <input type="submit" value="Add">
+        </form>';
+    } ?>
 </body>
 
 <?php require_once("footer.php") ?>

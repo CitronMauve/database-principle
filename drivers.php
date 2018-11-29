@@ -97,12 +97,12 @@ isset($_POST['phone'])) {
         ?>
     </table>
     </div>
+    <br>
     <?php
     if (isset($_SESSION['role']) && $_SESSION['role'] == 'Admin') {
         echo '
-        <br>
 
-        <h1>Add new driver</h1>
+        <h1>Add a new driver</h1>
         <form method="post">
             <p>
                 <label>Email</label>
@@ -129,10 +129,8 @@ isset($_POST['phone'])) {
                 <input type="text" name="phone" required/>
             </p>
             <input type="submit" value="Add">
-        </form>
-        ';
-    }
-    ?>
+        </form>';
+    } ?>
 </body>
 
 <?php require_once("footer.php") ?>
