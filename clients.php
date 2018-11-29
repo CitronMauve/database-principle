@@ -1,23 +1,47 @@
 <?php
 session_start();
+if (!isset($_SESSION['email']) ||
+    (isset($_SESSION['email']) && isset($_SESSION['role']) && $_SESSION['role'] !== 'Admin')) {
+    header('Location: login.php');
+}
 require("config.php");
 $title_page = 'Clients';
 require_once("header.php");
 
-function create_client($lastname, $firstname, $address, $phone, $conn) {
-    $qry = $conn->prepare("INSERT INTO Clients (lastname, firstname, address, phone) VALUES(?, ?, ?, ?)");
-    $qry->execute(array($lastname, $firstname, $address, $phone));
+function is_email_valid($email, $conn) {
+    $selectQuery = "SELECT 1 FROM Members WHERE email = '$email'";
+    $response = $conn->query($selectQuery);
+    if ($response->rowCount() > 0) {
+        echo 'Email already exists';
+        return false;
+    }
+
+    return true;
 }
 
-if (isset($_POST['lastname']) &&
+function create_client($email, $password, $lastname, $firstname, $address, $phone, $role, $conn) {
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+    $qry = $conn->prepare("INSERT INTO Members (email, password, lastname, firstname, address, phone, role) VALUES(?, ?, ?, ?, ?, ?, ?)");
+    $qry->execute(array($email, $hash, $lastname, $firstname, $address, $phone, $role));
+}
+
+if (isset($_POST['email']) &&
+isset($_POST['password']) &&
+isset($_POST['lastname']) &&
 isset($_POST['firstname']) &&
 isset($_POST['address']) &&
 isset($_POST['phone'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
     $lastname = $_POST['lastname'];
     $firstname = $_POST['firstname'];
     $address = $_POST['address'];
     $phone = $_POST['phone'];
-    create_client($lastname, $firstname, $address, $phone, $conn);
+    $role = 'Client';
+    if (is_email_valid($email, $conn)) {
+        create_client($email, $password, $lastname, $firstname, $address, $phone, $role, $conn);
+    }
 }
 ?>
 
@@ -26,6 +50,7 @@ isset($_POST['phone'])) {
     <div id="contener">
     <table>
         <tr>
+            <th>Email</th>
             <th>Lastname</th>
             <th>Firstname</th>
             <th>Address</th>
@@ -34,30 +59,36 @@ isset($_POST['phone'])) {
         </tr>
         <?php
         $clients_qry = $conn->query("SELECT *
-            FROM Clients
-            ORDER BY Clients.lastname");
+            FROM Members
+            WHERE role = 'Client'
+            ORDER BY Members.lastname");
 
         while ($clients_data = $clients_qry->fetch()) {
             $id = $clients_data['id'];
+            $email = $clients_data['email'];
             $lastname = $clients_data['lastname'];
             $firstname = $clients_data['firstname'];
             $address = $clients_data['address'];
             $phone = $clients_data['phone'];
+            $role = $clients_data['role'];
 
             $orders_qry = $conn->query("SELECT COUNT(*)
                 FROM Orders
                 WHERE id_client = '$id'");
             $orders_data = $orders_qry->fetch();
 
-            echo '<tr>';
-            echo '<td>'.$lastname.'</td>';
-            echo '<td>'.$firstname.'</td>';
-            echo '<td>'.$address.'</td>';
-            echo '<td>'.$phone.'</td>';
-            echo '<td>'.$orders_data['COUNT(*)'].'</td>';
-            echo '<td><a href="client.php?action=edit&id='.$id.'">Edit</a></td>';
-            echo '<td><a href="client.php?action=delete&id='.$id.'">Delete</a></td>';
-            echo '</tr>';
+            echo '
+            <tr>
+            <td>'.$email.'</td>
+            <td>'.$lastname.'</td>
+            <td>'.$firstname.'</td>
+            <td>'.$address.'</td>
+            <td>'.$phone.'</td>
+            <td>'.$orders_data['COUNT(*)'].'</td>
+            <td><a href="client.php?action=edit&id='.$id.'">Edit</a></td>
+            <td><a href="client.php?action=delete&id='.$id.'">Delete</a></td>
+            </tr>
+            ';
         }
         ?>
     </table>
@@ -66,6 +97,14 @@ isset($_POST['phone'])) {
 
     <h1>Add new client</h1>
     <form method="post">
+        <p>
+            <label>Email</label>
+            <input type="email" name="email" required/>
+        </p>
+        <p>
+            <label>Password</label>
+            <input type="password" name="password" required/>
+        </p>
         <p>
             <label>Lastname</label>
             <input type="text" name="lastname" required/>

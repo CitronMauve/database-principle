@@ -1,9 +1,7 @@
 <?php
 session_start();
-
-$_SESSION = array();
+unset($_SESSION['email']);
+unset($_SESSION['password']);
 session_destroy();
-
-setcookie('email', '');
-setcookie('password', '');
+header("Location: index.php");
 ?>

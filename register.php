@@ -60,13 +60,19 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
 <body>
     <h1>Registration Form</h1>
-    <form action="" method="post">
-        Email address <input type="email" name="email" placeholder="Email address" required/>
-
-        Password <input type="password" name="password" placeholder="Password" required/>
-
-        Confirm password <input type="password" name="confirm" placeholder="Confirm password" required/>
-
+    <form method="post">
+        <p>
+            <label>Email address</label>
+            <input type="email" name="email" required/>
+        </p>
+        <p>
+            <label>Password</label>
+            <input type="password" name="password" required/>
+        </p>
+        <p>
+            <label>Confirm password</label>
+            <input type="password" name="confirm" required/>
+        </p>
         <input type="submit" value="Submit">
     </form>
 </body>

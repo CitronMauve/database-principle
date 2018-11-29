@@ -13,10 +13,31 @@
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="menu.php">Menu</a></li>
-                <li><a href="clients.php">Clients</a></li>
-                <li><a href="drivers.php">Drivers</a></li>
+                <?php
+                    if (isset($_SESSION['role']) && $_SESSION['role'] == 'Admin') {
+                        echo '
+                        <li><a href="clients.php">Clients</a></li>
+                        ';
+                    }
+                    if (isset($_SESSION['role']) && $_SESSION['role'] !== 'Client') {
+                        echo '
+                        <li><a href="drivers.php">Drivers</a></li>
+                        ';
+                    }
+                ?>
                 <li><a href="order.php">Order</a></li>
-                <li><a href="register.php">Register</a></li>
+                <?php
+                    if (!isset($_SESSION['email'])) {
+                        echo '
+                        <li><a href="login.php">Login</a></li>
+                        <li><a href="register.php">Register</a></li>
+                        ';
+                    } else {
+                        echo '
+                        <li><a href="logout.php">Log out</a></li>
+                        ';
+                    }
+                ?>
             </ul>
         </nav>
     </header>

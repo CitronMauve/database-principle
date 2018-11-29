@@ -56,7 +56,8 @@ require_once("header.php");
         # Clients:
         <?php
         $count_qry = $conn->query("SELECT COUNT(*)
-            FROM Clients");
+            FROM Members
+            WHERE role = 'Client'");
         $count_data = $count_qry->fetch();
         echo $count_data['COUNT(*)'];
         ?>
@@ -64,9 +65,9 @@ require_once("header.php");
     <li>
         Best client:
         <?php
-        $best_qry = $conn->query("SELECT Clients.lastname, Clients.firstname, SUM(bill)
+        $best_qry = $conn->query("SELECT Members.lastname, Members.firstname, SUM(bill)
             FROM Orders
-            INNER JOIN Clients ON Orders.id_client = Clients.id
+            INNER JOIN Members ON Orders.id_client = Members.id
             GROUP BY Orders.id_client
             ORDER BY SUM(bill) DESC LIMIT 1 OFFSET 0");
         $best_data = $best_qry->fetch();
@@ -78,7 +79,8 @@ require_once("header.php");
         # Drivers:
         <?php
         $count_qry = $conn->query("SELECT COUNT(*)
-            FROM Drivers");
+            FROM Members
+            WHERE role = 'Driver'");
         $count_data = $count_qry->fetch();
         echo $count_data['COUNT(*)'];
         ?>
@@ -86,13 +88,12 @@ require_once("header.php");
     <li>
         Driver with the most delay:
         <?php
-        $worst_qry = $conn->query("SELECT Drivers.lastname, Drivers.firstname, COUNT(Drivers.id)
-            FROM Drivers
-            INNER JOIN Deliver ON Drivers.id = id_driver
-            INNER JOIN Orders ON Deliver.id_order = Orders.id
+        $worst_qry = $conn->query("SELECT Members.lastname, Members.firstname, COUNT(Members.id)
+            FROM Members
+            INNER JOIN Orders ON Orders.id_driver = Members.id
             WHERE TIMESTAMPDIFF(MINUTE, Orders.date_order, Orders.date_delivery) > 30
-            GROUP BY Drivers.id
-            ORDER BY COUNT(Drivers.id) DESC LIMIT 1 OFFSET 0;");
+            GROUP BY Members.id
+            ORDER BY COUNT(Members.id) DESC LIMIT 1 OFFSET 0;");
         $worst_data = $worst_qry->fetch();
         echo $worst_data['lastname'].' '.$worst_data['firstname'];
         ?>
