@@ -27,47 +27,21 @@ USE database_principle;
 
 CREATE TABLE `Associate` (
   `id_pizza` int(11) NOT NULL,
-  `id_order` int(11) NOT NULL,
-  `id_size` int(11) NOT NULL
+  `id_order` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `Associate`
 --
 
-INSERT INTO `Associate` (`id_pizza`, `id_order`, `id_size`) VALUES
-(1, 6, 1),
-(5, 5, 3),
-(6, 2, 3),
-(6, 7, 3),
-(8, 1, 3),
-(11, 4, 3),
-(12, 3, 3);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Clients`
---
-
-CREATE TABLE `Clients` (
-  `id` int(11) NOT NULL,
-  `lastname` varchar(255) COLLATE utf8_bin NOT NULL,
-  `firstname` varchar(255) COLLATE utf8_bin NOT NULL,
-  `address` varchar(255) COLLATE utf8_bin NOT NULL,
-  `phone` varchar(255) COLLATE utf8_bin NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `Clients`
---
-
-INSERT INTO `Clients` (`id`, `lastname`, `firstname`, `address`, `phone`) VALUES
-(1, 'THIAM', 'Moussa', '5 Chicken Street', '0601010101'),
-(2, 'BAPTISTE', 'Jean', '48 Rue du bourgeois', '0602020202'),
-(3, 'HUYHAI', 'Paul', '1 Boulevard du nem', '0603030303'),
-(4, 'COUDJI', 'Indien', '5 Avenue du Curry', '0604040404'),
-(5, 'KRIF', 'Soso', '9 Rue jean macé GZ', '0605050505');
+INSERT INTO `Associate` (`id_pizza`, `id_order`) VALUES
+(1, 6),
+(5, 5),
+(6, 2),
+(6, 7),
+(8, 1),
+(11, 4),
+(12, 3);
 
 -- --------------------------------------------------------
 
@@ -148,78 +122,6 @@ INSERT INTO `Contain` (`id_pizza`, `id_ingredient`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Deliver`
---
-
-CREATE TABLE `Deliver` (
-  `id_order` int(11) NOT NULL,
-  `id_driver` int(11) NOT NULL,
-  `id_vehicule` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `Deliver`
---
-
-INSERT INTO `Deliver` (`id_order`, `id_driver`, `id_vehicule`) VALUES
-(1, 3, 7),
-(2, 1, 3),
-(3, 2, 2),
-(4, 2, 2),
-(5, 2, 2),
-(6, 4, 1),
-(7, 3, 4);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Drive`
---
-
-CREATE TABLE `Drive` (
-  `id_driver` int(11) NOT NULL,
-  `id_vehicule` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `Drive`
---
-
-INSERT INTO `Drive` (`id_driver`, `id_vehicule`) VALUES
-(1, 3),
-(1, 7),
-(2, 2),
-(2, 4),
-(3, 1),
-(3, 6),
-(4, 5);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Drivers`
---
-
-CREATE TABLE `Drivers` (
-  `id` int(11) NOT NULL,
-  `lastname` varchar(255) COLLATE utf8_bin NOT NULL,
-  `firstname` varchar(255) COLLATE utf8_bin NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `Drivers`
---
-
-INSERT INTO `Drivers` (`id`, `lastname`, `firstname`) VALUES
-(1, 'BENTALHA', 'Malik'),
-(2, 'COUNDJIDAPADAME', 'Mourouguesh'),
-(3, 'KRIFI', 'Sofiene'),
-(4, 'EL BAGHDADI', 'Yassin'),
-(5, 'NGUYEN', 'Vincent');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `Ingredients`
 --
 
@@ -275,8 +177,30 @@ CREATE TABLE `Members` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
-  `firstname` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `firstname` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `role` enum('Client','Driver','Admin') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `Members`
+--
+
+INSERT INTO `Members` (`id`, `email`, `password`, `lastname`, `firstname`, `address`, `phone`, `role`) VALUES
+(1, 'nhhvincent@gmail.com', '$2y$10$oG3CPSWC5mG8N2MC9O6TquEyLR6jTI1QI0aF5TEm4ySShxMMpMko6', 'NGUYEN', 'Huy-Hai Vincent', 'address', '+33012345678', 'Admin'),
+(2, 'bentalha@gmail.com', '$2y$10$maZ28pBmNe1OBvVvfR84pucwEjuEdnWesz0gB4cE8Lx3c6F0t1oWG', 'BENTALHA', 'Malik', 'address', '+33123456789', 'Driver'),
+(3, 'coundjidapadame@gmail.com', '$2y$10$maZ28pBmNe1OBvVvfR84pucwEjuEdnWesz0gB4cE8Lx3c6F0t1oWG', 'COUNDJIDAPADAME', 'Mourouguesh', 'address', '+33234567890', 'Driver'),
+(4, 'krifi@gmail.com', '$2y$10$maZ28pBmNe1OBvVvfR84pucwEjuEdnWesz0gB4cE8Lx3c6F0t1oWG', 'KRIFI', 'Sofiene', 'address', '+33345678901', 'Driver'),
+(5, 'elbaghdadi@gmail.com', '$2y$10$maZ28pBmNe1OBvVvfR84pucwEjuEdnWesz0gB4cE8Lx3c6F0t1oWG', 'EL BAGHDADI', 'Yassin', 'address', '+33456789012', 'Driver'),
+(6, 'thiam@gmail.com', '$2y$10$c1dVdQ9cDo2AkIJ907gL7OHefKB28zmhb4SeXexXVj.UBmHrngKb.', 'THIAM', 'Moussa', '5 Chicken Street', '+33987654321', 'Client'),
+(7, 'baptiste@gmail.com', '$2y$10$c1dVdQ9cDo2AkIJ907gL7OHefKB28zmhb4SeXexXVj.UBmHrngKb.', 'BAPTISTE', 'Jean', '48 Rue du Bourgeois', '+33876543210', 'Client'),
+(8, 'huyhai@gmail.com', '$2y$10$c1dVdQ9cDo2AkIJ907gL7OHefKB28zmhb4SeXexXVj.UBmHrngKb.', 'HUYHAI', 'Paul', '1 Boulevard du nem', '+33765432109', 'Client'),
+(9, 'coudji@gmail.com', '$2y$10$c1dVdQ9cDo2AkIJ907gL7OHefKB28zmhb4SeXexXVj.UBmHrngKb.', 'COUDJI', 'Indien', '5 Avenue du Curry', '+33654321098', 'Client'),
+(10, 'krif@gmail.com', '$2y$10$c1dVdQ9cDo2AkIJ907gL7OHefKB28zmhb4SeXexXVj.UBmHrngKb.', 'KRIF', 'Soso', '9 Rue jean macé GZ', '+33543210987', 'Client'),
+(11, 'admin@admin.com', '$2y$10$oG3CPSWC5mG8N2MC9O6TquEyLR6jTI1QI0aF5TEm4ySShxMMpMko6', 'admin', 'admin', 'admin', 'admin', 'Admin'),
+(12, 'driver@driver.com', '$2y$10$maZ28pBmNe1OBvVvfR84pucwEjuEdnWesz0gB4cE8Lx3c6F0t1oWG', 'driver', 'driver', 'driver', 'driver', 'Driver'),
+(13, 'client@client.com', '$2y$10$c1dVdQ9cDo2AkIJ907gL7OHefKB28zmhb4SeXexXVj.UBmHrngKb.', 'client', 'client', 'client', 'client', 'Client');
 
 -- --------------------------------------------------------
 
@@ -289,22 +213,22 @@ CREATE TABLE `Orders` (
   `bill` decimal(10,0) NOT NULL,
   `date_order` datetime NOT NULL,
   `date_delivery` datetime NOT NULL,
-  `address` varchar(255) COLLATE utf8_bin NOT NULL,
-  `id_client` int(11) NOT NULL
+  `id_client` int(11) NOT NULL,
+  `id_driver` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `Orders`
 --
 
-INSERT INTO `Orders` (`id`, `bill`, `date_order`, `date_delivery`, `address`, `id_client`) VALUES
-(1, '20', '2018-06-13 11:49:05', '2018-06-13 12:11:05', '48 Rue du bourgeois', 2),
-(2, '12', '2018-06-13 11:56:12', '2018-06-13 12:19:15', '5 Avenue du Curry', 4),
-(3, '11', '2018-06-13 14:19:38', '2018-06-13 14:42:15', '9 Rue jean macé GZ', 5),
-(4, '11', '2018-08-13 14:10:38', '2018-08-13 14:59:15', '9 Rue jean macé GZ', 5),
-(5, '11', '2018-09-13 11:10:38', '2018-09-13 12:59:15', '9 Rue jean macé GZ', 5),
-(6, '5', '2018-06-13 19:10:13', '2018-06-13 19:24:15', '5 Avenue du poulet', 1),
-(7, '12', '2018-07-13 19:10:13', '2018-07-13 19:57:15', '5 Avenue du poulet', 1);
+INSERT INTO `Orders` (`id`, `bill`, `date_order`, `date_delivery`, `id_client`, `id_driver`) VALUES
+(1, '20', '2018-06-13 11:49:05', '2018-06-13 12:11:05', 7, 4),
+(2, '12', '2018-06-13 11:56:12', '2018-06-13 12:19:15', 9, 2),
+(3, '11', '2018-06-13 14:19:38', '2018-06-13 14:42:15', 10, 3),
+(4, '11', '2018-08-13 14:10:38', '2018-08-13 14:59:15', 10, 3),
+(5, '11', '2018-09-13 11:10:38', '2018-09-13 12:59:15', 10, 3),
+(6, '5', '2018-06-13 19:10:13', '2018-06-13 19:24:15', 6, 5),
+(7, '12', '2018-07-13 19:10:13', '2018-07-13 19:57:15', 6, 4);
 
 -- --------------------------------------------------------
 
@@ -337,51 +261,6 @@ INSERT INTO `Pizzas` (`id`, `name`, `img`, `price`) VALUES
 (11, 'Hot & Spicy', 'img/hot_spicy.jpg', '8'),
 (12, 'Salmon', 'img/salmon.jpg', '8');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `Sizes`
---
-
-CREATE TABLE `Sizes` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_bin NOT NULL,
-  `ratio` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `Sizes`
---
-
-INSERT INTO `Sizes` (`id`, `name`, `ratio`) VALUES
-(1, 'Dwarf', 0.666666666),
-(2, 'Human', 1),
-(3, 'Ogre', 1.333333333);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Vehicules`
---
-
-CREATE TABLE `Vehicules` (
-  `id` int(11) NOT NULL,
-  `type` varchar(255) COLLATE utf8_bin NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `Vehicules`
---
-
-INSERT INTO `Vehicules` (`id`, `type`) VALUES
-(1, 'Bike'),
-(2, 'Car'),
-(3, 'Car'),
-(4, 'Bike'),
-(5, 'Bike'),
-(6, 'Car'),
-(7, 'Bike');
-
 --
 -- Indexes for dumped tables
 --
@@ -390,15 +269,8 @@ INSERT INTO `Vehicules` (`id`, `type`) VALUES
 -- Indexes for table `Associate`
 --
 ALTER TABLE `Associate`
-  ADD PRIMARY KEY (`id_pizza`,`id_order`,`id_size`),
-  ADD KEY `FK_Associate_id_order` (`id_order`),
-  ADD KEY `FK_Associate_id_size` (`id_size`);
-
---
--- Indexes for table `Clients`
---
-ALTER TABLE `Clients`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_pizza`,`id_order`),
+  ADD KEY `FK_Associate_id_order` (`id_order`);
 
 --
 -- Indexes for table `Contain`
@@ -406,27 +278,6 @@ ALTER TABLE `Clients`
 ALTER TABLE `Contain`
   ADD PRIMARY KEY (`id_pizza`,`id_ingredient`),
   ADD KEY `FK_Contain_id_ingredient` (`id_ingredient`);
-
---
--- Indexes for table `Deliver`
---
-ALTER TABLE `Deliver`
-  ADD PRIMARY KEY (`id_order`,`id_driver`,`id_vehicule`),
-  ADD KEY `FK_Deliver_id_driver` (`id_driver`),
-  ADD KEY `FK_Deliver_id_vehicule` (`id_vehicule`);
-
---
--- Indexes for table `Drive`
---
-ALTER TABLE `Drive`
-  ADD PRIMARY KEY (`id_driver`,`id_vehicule`),
-  ADD KEY `FK_Drive_id_vehicule` (`id_vehicule`);
-
---
--- Indexes for table `Drivers`
---
-ALTER TABLE `Drivers`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `Ingredients`
@@ -446,7 +297,8 @@ ALTER TABLE `Members`
 --
 ALTER TABLE `Orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_Orders_id_client` (`id_client`);
+  ADD KEY `FK_Orders_id_client` (`id_client`),
+  ADD KEY `FK_Orders_id_driver` (`id_driver`);
 
 --
 -- Indexes for table `Pizzas`
@@ -455,32 +307,7 @@ ALTER TABLE `Pizzas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Sizes`
---
-ALTER TABLE `Sizes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Vehicules`
---
-ALTER TABLE `Vehicules`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `Clients`
---
-ALTER TABLE `Clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `Drivers`
---
-ALTER TABLE `Drivers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `Ingredients`
@@ -492,7 +319,7 @@ ALTER TABLE `Ingredients`
 -- AUTO_INCREMENT for table `Members`
 --
 ALTER TABLE `Members`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `Orders`
@@ -507,18 +334,6 @@ ALTER TABLE `Pizzas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `Sizes`
---
-ALTER TABLE `Sizes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `Vehicules`
---
-ALTER TABLE `Vehicules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
 -- Constraints for dumped tables
 --
 
@@ -527,8 +342,7 @@ ALTER TABLE `Vehicules`
 --
 ALTER TABLE `Associate`
   ADD CONSTRAINT `FK_Associate_id_order` FOREIGN KEY (`id_order`) REFERENCES `Orders` (`id`),
-  ADD CONSTRAINT `FK_Associate_id_pizza` FOREIGN KEY (`id_pizza`) REFERENCES `Pizzas` (`id`),
-  ADD CONSTRAINT `FK_Associate_id_size` FOREIGN KEY (`id_size`) REFERENCES `Sizes` (`id`);
+  ADD CONSTRAINT `FK_Associate_id_pizza` FOREIGN KEY (`id_pizza`) REFERENCES `Pizzas` (`id`);
 
 --
 -- Constraints for table `Contain`
@@ -538,25 +352,11 @@ ALTER TABLE `Contain`
   ADD CONSTRAINT `FK_Contain_id_pizza` FOREIGN KEY (`id_pizza`) REFERENCES `Pizzas` (`id`);
 
 --
--- Constraints for table `Deliver`
---
-ALTER TABLE `Deliver`
-  ADD CONSTRAINT `FK_Deliver_id_driver` FOREIGN KEY (`id_driver`) REFERENCES `Drivers` (`id`),
-  ADD CONSTRAINT `FK_Deliver_id_order` FOREIGN KEY (`id_order`) REFERENCES `Orders` (`id`),
-  ADD CONSTRAINT `FK_Deliver_id_vehicule` FOREIGN KEY (`id_vehicule`) REFERENCES `Vehicules` (`id`);
-
---
--- Constraints for table `Drive`
---
-ALTER TABLE `Drive`
-  ADD CONSTRAINT `FK_Drive_id_driver` FOREIGN KEY (`id_driver`) REFERENCES `Drivers` (`id`),
-  ADD CONSTRAINT `FK_Drive_id_vehicule` FOREIGN KEY (`id_vehicule`) REFERENCES `Vehicules` (`id`);
-
---
 -- Constraints for table `Orders`
 --
 ALTER TABLE `Orders`
-  ADD CONSTRAINT `FK_Orders_id_client` FOREIGN KEY (`id_client`) REFERENCES `Clients` (`id`);
+  ADD CONSTRAINT `FK_Orders_id_client` FOREIGN KEY (`id_client`) REFERENCES `Members` (`id`),
+  ADD CONSTRAINT `FK_Orders_id_driver` FOREIGN KEY (`id_driver`) REFERENCES `Members` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
