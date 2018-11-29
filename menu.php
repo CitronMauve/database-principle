@@ -4,32 +4,42 @@ require("config.php");
 $title_page = 'Menu';
 require_once("header.php");
 
-if (isset($_POST['pizza_id'])) {
-    $id = $_POST['pizza_id'];
-
-    // Get the price of the pizza
+function getPricePizza($id, $conn) {
     $qry = $conn->query("SELECT price FROM Pizzas WHERE id = '$id'");
-    $bill = $qry->fetch()['price'];
+    return $qry->fetch()['price'];
+}
 
-    $current = date('c');
-    $randomTime = time() + rand(60, 60*60);
-    $date_delivery = date('c', $randomTime);
-
-    // Get one random driver
+function getRandomDriver($conn) {
     $qry = $conn->query("SELECT id FROM Members WHERE role = 'Driver' ORDER BY RAND() LIMIT 1;");
-    $id_driver = $qry->fetch()['id'];
+    return $qry->fetch()['id'];
+}
 
+function addOrder($bill, $date_order, $date_delivery, $id_client, $id_driver, $conn) {
     $qry = $conn->prepare("INSERT INTO Orders (bill, date_order, date_delivery, id_client, id_driver)
     VALUES(?, ?, ?, ?, ?)");
-    $qry->execute(array($bill, $current, $date_delivery, $_SESSION['id'], $id_driver));
+    $qry->execute(array($bill, $date_order, $date_delivery, $id_client, $id_driver));
+}
 
-    // Get id of the order in the previous SQL query
+function addAssociate($id_pizza, $conn) {
     $qry = $conn->query("SELECT * FROM Orders ORDER BY id DESC LIMIT 1");
     $data = $qry->fetch();
 
     $qry = $conn->prepare("INSERT INTO Associate (id_pizza, id_order)
     VALUES(?, ?)");
-    $qry->execute(array($id, $data['id']));
+    $qry->execute(array($id_pizza, $data['id']));
+}
+
+if (isset($_POST['pizza_id'])) {
+    $id = $_POST['pizza_id'];
+    $bill = getPricePizza($id, $conn);
+    $current = date('c');
+    $randomTime = time() + rand(60, 60*60);
+    $date_delivery = date('c', $randomTime);
+    $id_driver = getRandomDriver($conn);
+
+    addOrder($bill, $current, $date_delivery, $_SESSION['id'], $id_driver, $conn);
+
+    addAssociate($id, $conn);
 }
 ?>
 
