@@ -25,6 +25,17 @@ function update_driver($id, $lastname, $firstname, $address, $phone, $role, $con
 }
 
 function delete_driver($id, $conn) {
+    $qry = $conn->query("SELECT id FROM Orders WHERE id_driver = '$id';");
+    $orderId = $qry->fetch()['id'];
+
+    $qry = $conn->prepare("DELETE FROM Associate WHERE id_order = :orderId;");
+    $qry->bindValue(":orderId", $orderId);
+    $qry->execute();
+
+    $qry = $conn->prepare("DELETE FROM Orders WHERE id_driver = :id;");
+    $qry->bindValue(":id", $id);
+    $qry->execute();
+
     $qry = $conn->prepare("DELETE FROM Members WHERE id = :id;");
     $qry->bindValue(":id", $id);
     $qry->execute();
