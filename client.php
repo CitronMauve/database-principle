@@ -25,10 +25,20 @@ function update_client($id, $lastname, $firstname, $address, $phone, $role, $con
 }
 
 function delete_client($id, $conn) {
+    $qry = $conn->query("SELECT id FROM Orders WHERE id_client = '$id';");
+    $orderId = $qry->fetch()['id'];
+
+    $qry = $conn->prepare("DELETE FROM Associate WHERE id_order = :orderId;");
+    $qry->bindValue(":orderId", $orderId);
+    $qry->execute();
+
+    $qry = $conn->prepare("DELETE FROM Orders WHERE id_client = :id;");
+    $qry->bindValue(":id", $id);
+    $qry->execute();
+
     $qry = $conn->prepare("DELETE FROM Members WHERE id = :id;");
     $qry->bindValue(":id", $id);
     $qry->execute();
-}
 
 if (isset($_GET['action']) && isset($_GET['id'])) {
     $action = $_GET['action'];
