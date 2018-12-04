@@ -32,6 +32,10 @@ function delete_client($id, $conn) {
     $qry->bindValue(":orderId", $orderId);
     $qry->execute();
 
+    $qry = $conn->prepare("UPDATE Orders SET id_client = 1 WHERE id_client = :id;");
+    $qry->bindValue(":id", $id);
+    $qry->execute();
+
     $qry = $conn->prepare("DELETE FROM Orders WHERE id_client = :id;");
     $qry->bindValue(":id", $id);
     $qry->execute();
