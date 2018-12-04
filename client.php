@@ -15,7 +15,7 @@ function update_client($id, $lastname, $firstname, $address, $phone, $role, $con
             address = :address,
             phone = :phone,
             role = :role
-        WHERE id = '$id'");
+        WHERE id = '$id';");
     $qry->bindValue(":lastname", $lastname);
     $qry->bindValue(":firstname", $firstname);
     $qry->bindValue(":address", $address);
@@ -25,7 +25,7 @@ function update_client($id, $lastname, $firstname, $address, $phone, $role, $con
 }
 
 function delete_client($id, $conn) {
-    $qry = $conn->prepare("DELETE FROM Members WHERE id = :id");
+    $qry = $conn->prepare("DELETE FROM Members WHERE id = :id;");
     $qry->bindValue(":id", $id);
     $qry->execute();
 }
@@ -36,7 +36,7 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 
     switch ($action) {
         case "edit":
-            $qry = $conn->query("SELECT email, lastname, firstname, address, phone, role FROM Members WHERE id = '$id'");
+            $qry = $conn->query("SELECT email, lastname, firstname, address, phone, role FROM Members WHERE id = '$id';");
             $data = $qry->fetch();
             $email = $data['email'];
             $lastname = $data['lastname'];

@@ -10,7 +10,7 @@ $title_page = 'Drivers';
 require_once("header.php");
 
 function isEmailValid($email, $conn) {
-    $selectQuery = "SELECT 1 FROM Members WHERE email = '$email'";
+    $selectQuery = "SELECT 1 FROM Members WHERE email = '$email';";
     $response = $conn->query($selectQuery);
     if ($response->rowCount() > 0) {
         echo 'Email already exists';
@@ -23,7 +23,7 @@ function isEmailValid($email, $conn) {
 function createDriver($email, $password, $lastname, $firstname, $address, $phone, $role, $conn) {
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $qry = $conn->prepare("INSERT INTO Members (email, password, lastname, firstname, address, phone, role) VALUES(?, ?, ?, ?, ?, ?, ?)");
+    $qry = $conn->prepare("INSERT INTO Members (email, password, lastname, firstname, address, phone, role) VALUES(?, ?, ?, ?, ?, ?, ?);");
     $qry->execute(array($email, $hash, $lastname, $firstname, $address, $phone, $role));
 }
 
@@ -59,10 +59,7 @@ isset($_POST['phone'])) {
             <th># delivery</th>
         </tr>
         <?php
-        $drivers_qry = $conn->query("SELECT *
-            FROM Members
-            WHERE role = 'Driver'
-            ORDER BY Members.lastname");
+        $drivers_qry = $conn->query("SELECT * FROM Members WHERE role = 'Driver' ORDER BY lastname;");
 
         while ($drivers_data = $drivers_qry->fetch()) {
             $id = $drivers_data['id'];
@@ -72,9 +69,7 @@ isset($_POST['phone'])) {
             $address = $drivers_data['address'];
             $phone = $drivers_data['phone'];
 
-            $deliver_qry = $conn->query("SELECT COUNT(*)
-                FROM Orders
-                WHERE id_driver = '$id'");
+            $deliver_qry = $conn->query("SELECT COUNT(*) FROM Orders WHERE id_driver = '$id';");
             $deliver_data = $deliver_qry->fetch();
 
             echo '

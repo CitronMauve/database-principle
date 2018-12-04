@@ -16,7 +16,7 @@ function getRandomDriver($conn) {
 
 function addOrder($bill, $date_order, $date_delivery, $id_client, $id_driver, $conn) {
     $qry = $conn->prepare("INSERT INTO Orders (bill, date_order, date_delivery, id_client, id_driver)
-    VALUES(?, ?, ?, ?, ?)");
+    VALUES(?, ?, ?, ?, ?);");
     $qry->execute(array($bill, $date_order, $date_delivery, $id_client, $id_driver));
 }
 

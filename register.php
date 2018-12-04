@@ -10,7 +10,7 @@ function isEmailValid($email, $conn) {
         return false;
     }
 
-    $selectQuery = "SELECT 1 FROM Members WHERE email = '$email'";
+    $selectQuery = "SELECT 1 FROM Members WHERE email = '$email';";
     $response = $conn->query($selectQuery);
     if ($response->rowCount() > 0) {
         echo 'Email already exists';
@@ -37,7 +37,7 @@ function createMember($email, $password, $confirm, $conn) {
     $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     // Insert new user
-    $query = $conn->prepare("INSERT INTO Members (email, password) VALUES(?, ?)");
+    $query = $conn->prepare("INSERT INTO Members (email, password, role) VALUES(?, ?, 'Client');");
     $result = $query->execute(array($_POST['email'], $hash));
 
     return $result;

@@ -8,13 +8,13 @@ $title_page = 'My profile';
 require_once("header.php");
 
 function isEmailValid($id, $email, $conn) {
-    $qry = "SELECT 1 FROM Members WHERE id = '$id' AND email = '$email'";
+    $qry = "SELECT 1 FROM Members WHERE id = '$id' AND email = '$email';";
     $data = $conn->query($qry);
     if ($data->rowCount() > 0) {
         return true;
     }
 
-    $qry = "SELECT 1 FROM Members WHERE email = '$email'";
+    $qry = "SELECT 1 FROM Members WHERE email = '$email';";
     $data = $conn->query($qry);
     if ($data->rowCount() > 0) {
         echo 'Email already exists';
@@ -37,7 +37,7 @@ function isPasswordValid($password, $confirm) {
 }
 
 $id = $_SESSION['id'];
-$qry = $conn->query("SELECT * FROM Members WHERE id = '$id'");
+$qry = $conn->query("SELECT * FROM Members WHERE id = '$id';");
 $data = $qry->fetch();
 $email = $data['email'];
 $lastname = $data['lastname'];
@@ -61,7 +61,7 @@ isset($_POST['phone'])) {
             firstname = :firstname,
             address = :address,
             phone = :phone
-        WHERE id = '$id'");
+        WHERE id = '$id';");
     $qry->bindValue(":lastname", $lastname);
     $qry->bindValue(":firstname", $firstname);
     $qry->bindValue(":address", $address);
@@ -71,7 +71,7 @@ isset($_POST['phone'])) {
     if (isEmailValid($id, $_POST['email'], $conn)) {
         $qry = $conn->prepare("UPDATE Members
             SET email = :email
-            WHERE id = '$id'");
+            WHERE id = '$id';");
         $qry->bindValue(":email", $email);
         $qry->execute();
     }
@@ -82,7 +82,7 @@ isset($_POST['phone'])) {
 
         $qry = $conn->prepare("UPDATE Members
             SET password = :hash
-            WHERE id = '$id'");
+            WHERE id = '$id';");
         $qry->bindValue(":hash", $hash);
         $qry->execute();
     }

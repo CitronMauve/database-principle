@@ -9,7 +9,7 @@ $title_page = 'Clients';
 require_once("header.php");
 
 function isEmailValid($email, $conn) {
-    $selectQuery = "SELECT 1 FROM Members WHERE email = '$email'";
+    $selectQuery = "SELECT 1 FROM Members WHERE email = '$email';";
     $response = $conn->query($selectQuery);
     if ($response->rowCount() > 0) {
         echo 'Email already exists';
@@ -22,7 +22,7 @@ function isEmailValid($email, $conn) {
 function createClient($email, $password, $lastname, $firstname, $address, $phone, $role, $conn) {
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $qry = $conn->prepare("INSERT INTO Members (email, password, lastname, firstname, address, phone, role) VALUES(?, ?, ?, ?, ?, ?, ?)");
+    $qry = $conn->prepare("INSERT INTO Members (email, password, lastname, firstname, address, phone, role) VALUES(?, ?, ?, ?, ?, ?, ?);");
     $qry->execute(array($email, $hash, $lastname, $firstname, $address, $phone, $role));
 }
 
@@ -58,10 +58,7 @@ isset($_POST['phone'])) {
             <th># order</th>
         </tr>
         <?php
-        $clients_qry = $conn->query("SELECT *
-            FROM Members
-            WHERE role = 'Client'
-            ORDER BY Members.lastname");
+        $clients_qry = $conn->query("SELECT * FROM Members WHERE role = 'Client' ORDER BY lastname;");
 
         while ($clients_data = $clients_qry->fetch()) {
             $id = $clients_data['id'];
@@ -72,9 +69,7 @@ isset($_POST['phone'])) {
             $phone = $clients_data['phone'];
             $role = $clients_data['role'];
 
-            $orders_qry = $conn->query("SELECT COUNT(*)
-                FROM Orders
-                WHERE id_client = '$id'");
+            $orders_qry = $conn->query("SELECT COUNT(*) FROM Orders WHERE id_client = '$id';");
             $orders_data = $orders_qry->fetch();
 
             echo '

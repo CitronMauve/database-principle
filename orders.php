@@ -23,16 +23,16 @@ require_once("header.php");
         $id = $_SESSION['id'];
         $clientQry = "SELECT bill, date_order, date_delivery, id_client, id_driver, lastname, firstname, name
             FROM Orders
-            INNER JOIN Members ON Members.id = Orders.id_driver
-            INNER JOIN Associate ON Associate.id_order = Orders.id
-            INNER JOIN Pizzas ON Pizzas.id = Associate.id_pizza
-            WHERE id_client = '$id'";
+                INNER JOIN Members ON Members.id = id_driver
+                INNER JOIN Associate ON Associate.id_order = Orders.id
+                INNER JOIN Pizzas ON Pizzas.id = id_pizza
+            WHERE id_client = '$id';";
         $driverQry = "SELECT bill, date_order, date_delivery, id_client, id_driver, lastname, firstname, name
             FROM Orders
-            INNER JOIN Members ON Members.id = Orders.id_driver
-            INNER JOIN Associate ON Associate.id_order = Orders.id
-            INNER JOIN Pizzas ON Pizzas.id = Associate.id_pizza
-            WHERE id_driver = '$id'";
+                INNER JOIN Members ON Members.id = id_driver
+                INNER JOIN Associate ON Associate.id_order = Orders.id
+                INNER JOIN Pizzas ON Pizzas.id = id_pizza
+            WHERE id_driver = '$id';";
         $qry = $_SESSION['role'] === 'Client' ?
             $conn->query($clientQry) :
             $conn->query($driverQry);
