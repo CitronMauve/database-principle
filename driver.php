@@ -32,6 +32,10 @@ function delete_driver($id, $conn) {
     $qry->bindValue(":orderId", $orderId);
     $qry->execute();
 
+    $qry = $conn->prepare("UPDATE Orders SET id_driver = 1 WHERE id_driver = :id;");
+    $qry->bindValue(":id", $id);
+    $qry->execute();
+
     $qry = $conn->prepare("DELETE FROM Orders WHERE id_driver = :id;");
     $qry->bindValue(":id", $id);
     $qry->execute();
