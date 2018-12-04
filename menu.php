@@ -5,7 +5,7 @@ $title_page = 'Menu';
 require_once("header.php");
 
 function getPricePizza($id, $conn) {
-    $qry = $conn->query("SELECT price FROM Pizzas WHERE id = '$id'");
+    $qry = $conn->query("SELECT price FROM Pizzas WHERE id = '$id';");
     return $qry->fetch()['price'];
 }
 
@@ -21,11 +21,10 @@ function addOrder($bill, $date_order, $date_delivery, $id_client, $id_driver, $c
 }
 
 function addAssociate($id_pizza, $conn) {
-    $qry = $conn->query("SELECT * FROM Orders ORDER BY id DESC LIMIT 1");
+    $qry = $conn->query("SELECT * FROM Orders ORDER BY id DESC LIMIT 1;");
     $data = $qry->fetch();
 
-    $qry = $conn->prepare("INSERT INTO Associate (id_pizza, id_order)
-    VALUES(?, ?)");
+    $qry = $conn->prepare("INSERT INTO Associate (id_pizza, id_order) VALUES(?, ?);");
     $qry->execute(array($id_pizza, $data['id']));
 }
 
@@ -47,7 +46,7 @@ if (isset($_POST['pizza_id'])) {
     <h1>Menu</h1>
     <div id="contener">
     <?php
-    $pizza_qry = $conn->query("SELECT * FROM Pizzas ORDER BY Pizzas.name");
+    $pizza_qry = $conn->query("SELECT * FROM Pizzas ORDER BY name;");
 
     while ($pizzas_data = $pizza_qry->fetch()) {
         $pizza_id = $pizzas_data['id'];
@@ -61,10 +60,10 @@ if (isset($_POST['pizza_id'])) {
         <img src="'.$pizza_img.'">';
         $ingredient_qry = $conn->query("SELECT Ingredients.name AS n
             FROM Pizzas
-            INNER JOIN Contain ON Pizzas.id = Contain.id_pizza
-            INNER JOIN Ingredients ON Contain.id_ingredient = Ingredients.id
+                INNER JOIN Contain ON Pizzas.id = id_pizza
+                INNER JOIN Ingredients ON id_ingredient = Ingredients.id
             WHERE Pizzas.name = '$pizza_name'
-            ORDER BY n");
+            ORDER BY n;");
         while ($ingredient_data = $ingredient_qry->fetch()) {
             echo '<div style="font-size: 1.2em;">'.$ingredient_data['n'].'</div>';
         }
@@ -73,8 +72,7 @@ if (isset($_POST['pizza_id'])) {
             <form method="post">
                 <input type="text" name="pizza_id" value="'.$pizza_id.'" hidden/>
                 <input type="submit" value="Add" style="text-align: center">
-            </form>
-            ';
+            </form>';
         }
         echo '</div>';
     }

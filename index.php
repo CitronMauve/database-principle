@@ -11,8 +11,7 @@ require_once("header.php");
     <li>
         # Kind of pizza:
         <?php
-        $count_qry = $conn->query("SELECT COUNT(*)
-            FROM Pizzas");
+        $count_qry = $conn->query("SELECT COUNT(*) FROM Pizzas;");
         $count_data = $count_qry->fetch();
         echo $count_data['COUNT(*)'];
         ?>
@@ -20,11 +19,11 @@ require_once("header.php");
     <li>
         Most popular pizza:
         <?php
-        $best_qry = $conn->query("SELECT Pizzas.name, COUNT(Pizzas.id)
+        $best_qry = $conn->query("SELECT name, COUNT(Pizzas.id)
             FROM Pizzas
-            INNER JOIN Associate ON Associate.id_pizza = Pizzas.id
+                INNER JOIN Associate ON id_pizza = Pizzas.id
             GROUP BY Pizzas.id
-            ORDER BY COUNT(Pizzas.id) DESC LIMIT 1 OFFSET 0");
+            ORDER BY COUNT(Pizzas.id) DESC LIMIT 1 OFFSET 0;");
         $best_data = $best_qry->fetch();
         echo $best_data['name'];
         ?>
@@ -33,8 +32,7 @@ require_once("header.php");
     <li>
         # Ingredients:
         <?php
-        $count_qry = $conn->query("SELECT COUNT(*)
-            FROM Ingredients");
+        $count_qry = $conn->query("SELECT COUNT(*) FROM Ingredients;");
         $count_data = $count_qry->fetch();
         echo $count_data['COUNT(*)'];
         ?>
@@ -42,11 +40,11 @@ require_once("header.php");
     <li>
         Most popular ingredient:
         <?php
-        $best_qry = $conn->query("SELECT Ingredients.name, COUNT(Ingredients.id)
+        $best_qry = $conn->query("SELECT name, COUNT(Ingredients.id)
             FROM Ingredients
-            INNER JOIN Contain ON Contain.id_ingredient = Ingredients.id
+                INNER JOIN Contain ON id_ingredient = Ingredients.id
             GROUP BY Ingredients.id
-            ORDER BY COUNT(Ingredients.id) DESC LIMIT 1 OFFSET 0");
+            ORDER BY COUNT(Ingredients.id) DESC LIMIT 1 OFFSET 0;");
         $best_data = $best_qry->fetch();
         echo $best_data['name'];
         ?>
@@ -55,9 +53,7 @@ require_once("header.php");
     <li>
         # Clients:
         <?php
-        $count_qry = $conn->query("SELECT COUNT(*)
-            FROM Members
-            WHERE role = 'Client'");
+        $count_qry = $conn->query("SELECT COUNT(*) FROM Members WHERE role = 'Client';");
         $count_data = $count_qry->fetch();
         echo $count_data['COUNT(*)'];
         ?>
@@ -65,11 +61,11 @@ require_once("header.php");
     <li>
         Best client:
         <?php
-        $best_qry = $conn->query("SELECT Members.lastname, Members.firstname, SUM(bill)
+        $best_qry = $conn->query("SELECT lastname, firstname, SUM(bill)
             FROM Orders
-            INNER JOIN Members ON Orders.id_client = Members.id
-            GROUP BY Orders.id_client
-            ORDER BY SUM(bill) DESC LIMIT 1 OFFSET 0");
+                INNER JOIN Members ON id_client = Members.id
+            GROUP BY id_client
+            ORDER BY SUM(bill) DESC LIMIT 1 OFFSET 0;");
         $best_data = $best_qry->fetch();
         echo $best_data['lastname'].' '.$best_data['firstname'];
         ?>
@@ -78,9 +74,7 @@ require_once("header.php");
     <li>
         # Drivers:
         <?php
-        $count_qry = $conn->query("SELECT COUNT(*)
-            FROM Members
-            WHERE role = 'Driver'");
+        $count_qry = $conn->query("SELECT COUNT(*) FROM Members WHERE role = 'Driver';");
         $count_data = $count_qry->fetch();
         echo $count_data['COUNT(*)'];
         ?>
@@ -88,10 +82,10 @@ require_once("header.php");
     <li>
         Driver with the most delay:
         <?php
-        $worst_qry = $conn->query("SELECT Members.lastname, Members.firstname, COUNT(Members.id)
+        $worst_qry = $conn->query("SELECT lastname, firstname, COUNT(Members.id)
             FROM Members
-            INNER JOIN Orders ON Orders.id_driver = Members.id
-            WHERE TIMESTAMPDIFF(MINUTE, Orders.date_order, Orders.date_delivery) > 30
+                INNER JOIN Orders ON id_driver = Members.id
+            WHERE TIMESTAMPDIFF(MINUTE, date_order, date_delivery) > 30
             GROUP BY Members.id
             ORDER BY COUNT(Members.id) DESC LIMIT 1 OFFSET 0;");
         $worst_data = $worst_qry->fetch();
@@ -102,8 +96,7 @@ require_once("header.php");
     <li>
         # Sales:
         <?php
-        $count_qry = $conn->query("SELECT COUNT(*)
-            FROM Orders");
+        $count_qry = $conn->query("SELECT COUNT(*) FROM Orders;");
         $count_data = $count_qry->fetch();
         echo $count_data['COUNT(*)'];
         ?>
@@ -111,8 +104,7 @@ require_once("header.php");
     <li>
         Average bill (€):
         <?php
-        $avg_qry = $conn->query("SELECT AVG(bill)
-            FROM Orders");
+        $avg_qry = $conn->query("SELECT AVG(bill) FROM Orders;");
         $avg_data = $avg_qry->fetch();
         echo $avg_data['AVG(bill)'];
         ?>

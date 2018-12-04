@@ -55,8 +55,7 @@ require_once("header.php");
             <td>'.$dOrder.'</td>
             <td>'.$dDelivery.'</td>
             <td>'.$lastname.' '.$firstname.'</td>
-            </tr>
-            ';
+            </tr>';
         }
         ?>
     </table>

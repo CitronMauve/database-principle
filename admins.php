@@ -41,8 +41,7 @@ require_once("header.php");
             <td>'.$firstname.'</td>
             <td>'.$address.'</td>
             <td>'.$phone.'</td>
-            </tr>
-            ';
+            </tr>';
         }
         ?>
     </table>

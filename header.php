@@ -16,32 +16,27 @@
                 <?php
                     if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
                         echo '
-                        <li><a href="clients.php">Clients</a></li>
-                        ';
+                        <li><a href="clients.php">Clients</a></li>';
                     }
                     if (isset($_SESSION['role']) && $_SESSION['role'] !== 'Client') {
                         echo '
-                        <li><a href="drivers.php">Drivers</a></li>
-                        ';
+                        <li><a href="drivers.php">Drivers</a></li>';
                     }
                     if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
                         echo '
-                        <li><a href="admins.php">Admins</a></li>
-                        ';
+                        <li><a href="admins.php">Admins</a></li>';
                     }
                     if (!isset($_SESSION['id'])) {
                         echo '
                         <li><a href="login.php">Login</a></li>
-                        <li><a href="register.php">Register</a></li>
-                        ';
+                        <li><a href="register.php">Register</a></li>';
                     } else {
                         if ($_SESSION['role'] === 'Driver' || $_SESSION['role'] === 'Client') {
                             echo '<li><a href="orders.php">Orders</a></li>';
                         }
                         echo '
                         <li><a href="profile.php">Profile</a></li>
-                        <li><a href="logout.php">Log out</a></li>
-                        ';
+                        <li><a href="logout.php">Log out</a></li>';
                     }
                 ?>
             </ul>
